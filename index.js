@@ -1,9 +1,10 @@
-const TelegramBot = require('node-telegram-bot-api')
+const { Telegraf } = require('telegraf')
 const TOKEN = '1803854962:AAHrUeZ5FBHl1yBXuXxHHFGOOe5oq9sAlKU'
 
-const bot = new TelegramBot(TOKEN, {polling: true})
-
-bot.on('message', msg => {
-    bot.sendMessage(msg.chat.id, 'Добро пожаловать ${msg.from.first_name}. Задайте ваш вопрос, либо выберите из часто задаваемых вопросов')
-    
-})
+const { Telegraf } = require('telegraf')
+const bot = new Telegraf(process.env.TOKEN) //сюда помещается токен, который дал botFather
+bot.start((ctx) => ctx.reply('Здесь вы можете найти ответы на часто задаваемые вопросы, либо задать свой вопрос')) //ответ бота на команду /start
+bot.help((ctx) => ctx.reply('Send me a sticker')) //ответ бота на команду /help
+bot.on('sticker', (ctx) => ctx.reply('')) //bot.on это обработчик введенного юзером сообщения, в данном случае он отслеживает стикер, можно использовать обработчик текста или голосового сообщения
+bot.hears('hi', (ctx) => ctx.reply('Hey there')) // bot.hears это обработчик конкретного текста, данном случае это - "hi"
+bot.launch() // запуск бота
